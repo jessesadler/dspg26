@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.36">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>13&nbsp; Quarto documents – Data Science for Public Good</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./markdown-syntax.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-7bffad5ec597a6be8e2440dc65fe4f2c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+</head>
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./markdown-syntax.html">Markdown and Quarto</a></li><li class="breadcrumb-item"><a href="./quarto-docs.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Quarto documents</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Data Science for Public Good</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">R and RStudio</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rstudio-setup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Setting up RStudio for success</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rstudio-guide.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Using R in RStudio</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./importing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Importing data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./wrangling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Wrangling data in the tidyverse</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ggplot2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Visualization with ggplot2</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ggplot2-color.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Colors with ggplot2</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Git and GitHub</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./git-overview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Git and GitHub: An overview</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./git-install.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Installing Git</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./git-setup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Setting up Git and GitHub</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./git-workflow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">The Git and GitHub workflow</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./git-glossary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Git glossary</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Markdown and Quarto</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./markdown-syntax.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Markdown Syntax</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./quarto-docs.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Quarto documents</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+    </ul>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+<li><a href="#resources" id="toc-resources" class="nav-link active" data-scroll-target="#resources"><span class="header-section-number">13.1</span> Resources</a></li>
+  <li>
+<a href="#quarto-foundations" id="toc-quarto-foundations" class="nav-link" data-scroll-target="#quarto-foundations"><span class="header-section-number">13.2</span> Quarto foundations</a>
+  <ul class="collapse">
+<li><a href="#quarto-in-rstudio" id="toc-quarto-in-rstudio" class="nav-link" data-scroll-target="#quarto-in-rstudio">Quarto in RStudio</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#quartos-three-components" id="toc-quartos-three-components" class="nav-link" data-scroll-target="#quartos-three-components"><span class="header-section-number">13.3</span> Quarto’s three components</a>
+  <ul class="collapse">
+<li><a href="#yaml-header" id="toc-yaml-header" class="nav-link" data-scroll-target="#yaml-header">1. YAML header</a></li>
+  <li><a href="#markdown" id="toc-markdown" class="nav-link" data-scroll-target="#markdown">2. Markdown</a></li>
+  <li><a href="#code-chunks" id="toc-code-chunks" class="nav-link" data-scroll-target="#code-chunks">3. Code chunks</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#output-formats" id="toc-output-formats" class="nav-link" data-scroll-target="#output-formats"><span class="header-section-number">13.4</span> Output formats</a>
+  <ul class="collapse">
+<li><a href="#a-note-on-pdf-formats" id="toc-a-note-on-pdf-formats" class="nav-link" data-scroll-target="#a-note-on-pdf-formats">A note on PDF formats</a></li>
+  <li><a href="#project-outputs" id="toc-project-outputs" class="nav-link" data-scroll-target="#project-outputs">Project outputs</a></li>
+  </ul>
+</li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">13.5</span> Conclusion</a></li>
+  </ul></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./markdown-syntax.html">Markdown and Quarto</a></li><li class="breadcrumb-item"><a href="./quarto-docs.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Quarto documents</span></a></li></ol></nav><div class="quarto-title">
+<h1 class="title">
+<span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Quarto documents</span>
+</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header><p>Quarto documents provide a way to mix together <a href="./markdown-syntax.html">Markdown text</a> with code and its results. Whereas <strong>R scripts</strong> are designed primarily for writing and running code—with comments (<code>#</code>) giving a means to document the code—<strong>Quarto documents</strong> allow you to write prose alongside code. You can then output the Quarto document into a number of formats, including web pages, PDFs, slides, and even Word documents. Projects of connected Quarto documents can create <a href="https://quarto.org/docs/dashboards/">dashboards</a>, <a href="https://quarto.org/docs/books/">books</a>, <a href="https://quarto.org/docs/websites/">websites</a>.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> Why might you use Quarto documents instead of an R script?</p>
+<ol type="1">
+<li>To communicate a data analysis with calculations and visualizations, but you do not need the code that produced the analysis to be shown in the final document.</li>
+<li>If you want to write extensive text or write structured text with Markdown between your blocks of code.</li>
+<li>If you want to create a stylized output such as web pages, PDFs, slides, and more from Markdown whether it includes code or not.</li>
+</ol>
+<p>To get familiar with Quarto, <strong>please download</strong> this <a href="files/quarto-intro.qmd">Quarto template document</a>, place it in your project, read through it, and then render it into an HTML document.</p>
+<section id="resources" class="level2" data-number="13.1"><h2 data-number="13.1" class="anchored" data-anchor-id="resources">
+<span class="header-section-number">13.1</span> Resources</h2>
+<p>The rest of this page goes over the foundations of Quarto documents, but there are a couple of very good resources that should be consulted to get a fuller understanding of how and why to use Quarto documents.</p>
+<ul>
+<li>A good place to start is with the <a href="https://quarto.org/docs/get-started/hello/rstudio.html">Getting started with Quarto tutorial for RStudio</a>. It provides an overview of how to write and render Quarto documents into a variety of formats in RStudio. Make sure to go through all three pages of Hello, Quarto, Computations, and Authoring.</li>
+<li>Once you have gone through the tutorial, look over the <a href="https://r4ds.hadley.nz/quarto.html">Quarto</a> chapter of <em>R for Data Science</em>.</li>
+<li>The <a href="https://quarto.org/docs/guide/">Quarto documentation</a> is very good and very in depth. It is a good place to return to each time you have a question. Some particularly useful pages include:
+<ul>
+<li><a href="https://quarto.org/docs/authoring/markdown-basics.html">Markdown basics</a></li>
+<li><a href="https://quarto.org/docs/computations/r.html">Using R</a></li>
+<li><a href="https://quarto.org/docs/tools/rstudio.html">Quarto in RStudio</a></li>
+<li><a href="https://quarto.org/docs/output-formats/html-basics.html">HTML basics</a></li>
+</ul>
+</li>
+</ul></section><section id="quarto-foundations" class="level2" data-number="13.2"><h2 data-number="13.2" class="anchored" data-anchor-id="quarto-foundations">
+<span class="header-section-number">13.2</span> Quarto foundations</h2>
+<p>A Quarto document is a plain text file that has a <code>.qmd</code> extension. It contains three basic components:</p>
+<ol type="1">
+<li>A <a href="https://en.wikipedia.org/wiki/YAML">YAML header</a> contained within lines with three dashes (<code>---</code>).</li>
+<li>Markdown text.</li>
+<li>Code chunks set off by three back ticks (```).</li>
+</ol>
+<div id="fig-quarto-doc" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A screen shot of a Quarto document in RStudio showing the three main components of a YAML header, markdown content, and code chunks.">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-quarto-doc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="files/img/quarto-doc.png" class="img-fluid figure-img" style="width:60.0%" alt="A screen shot of a Quarto document in RStudio showing the three main components of a YAML header, markdown content, and code chunks.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-quarto-doc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;13.1: A Quarto document in RStudio.
+</figcaption></figure>
+</div>
+<p>The key distinguishing feature between Quarto documents and R scripts is that you can <strong>render</strong> Quarto documents to different outputs. Rendering a Quarto document with the Render button or <code>Cmd/Ctrl + Shift + K</code> runs the R (or Python) code, producing outputs and converting the document to a Markdown document. It then uses <a href="https://pandoc.org/">Pandoc</a> to convert the Markdown document to whatever output is specified in the YAML heading. The process is shown in <a href="#fig-quarto-flow" class="quarto-xref">Figure&nbsp;<span>13.2</span></a>.</p>
+<div id="fig-quarto-flow" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A diagram showing the flow of Quarto documents from qmd file through knitr to markdown and then through Pandoc to multiple outputs.">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-quarto-flow-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="files/img/quarto-flow.png" class="img-fluid figure-img" style="width:60.0%" alt="A diagram showing the flow of Quarto documents from qmd file through knitr to markdown and then through Pandoc to multiple outputs.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-quarto-flow-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;13.2: Diagram of the process of rendering a Quarto document. Image is from Wickham et al., <em>R for Data Science</em>, Quarto.
+</figcaption></figure>
+</div>
+<section id="quarto-in-rstudio" class="level3"><h3 class="anchored" data-anchor-id="quarto-in-rstudio">Quarto in RStudio</h3>
+<p>The <a href="https://quarto.org/docs/get-started/">Get Started</a> page of the Quarto documentation shows that you can write Quarto documents in a variety of applications. However, RStudio has many built-in functions that make it easier to work with Quarto documents. You can make a new Quarto document by going to File -&gt; New Document -&gt; Quarto Document… You can add information to the dialogue to fill in the YAML heading, or you can choose Create Empty Document.</p>
+<div id="fig-quarto-new" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A screenshot of the new Quarto Document dialogue in RStudio.">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-quarto-new-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="files/img/quarto-new.png" class="img-fluid figure-img" style="width:60.0%" alt="A screenshot of the new Quarto Document dialogue in RStudio.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-quarto-new-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;13.3: Dialogue box to create a new Quarto document.
+</figcaption></figure>
+</div>
+<p>Quarto documents can be edited in either the <a href="https://quarto.org/docs/visual-editor/">Visual editor</a> or the Source editor. The Visual editor styles your text as you go, whereas the source editor will give you an interface that is more similar to R scripts. You can change back and forth with the buttons at the top of the editor pane, but do note that this can slightly change how your Markdown is written.</p>
+</section></section><section id="quartos-three-components" class="level2" data-number="13.3"><h2 data-number="13.3" class="anchored" data-anchor-id="quartos-three-components">
+<span class="header-section-number">13.3</span> Quarto’s three components</h2>
+<section id="yaml-header" class="level3"><h3 class="anchored" data-anchor-id="yaml-header">1. YAML header</h3>
+<p>The YAML header provides a way to indicate the title of the document, document metadata such as author, the output format(s), and document wide options. <a href="https://en.wikipedia.org/wiki/YAML">YAML</a> is a way to store data in a human-readable form. Its basic structure is <code>key: value</code>. The YAML heading is set off by three dashes <code>---</code>. A somewhat complex heading might look like this:</p>
+<pre><code>---
+title: "My title here"
+author: "Your name"
+date: last-modified
+format:
+  html:
+    toc: true
+execute:
+  echo: false
+  warning: false
+---</code></pre>
+<p>The available keys can be found in the documentation for each type of output.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> Many options are shared across document output types, but some are not. See the <a href="https://quarto.org/docs/reference/formats/html.html">HTML options</a> for the widest number of options. It can be difficult to write these YAML headers. There are a lot of different options, and the indentation level must be formatted correctly. Happily, in practice, it is unlikely to be as difficult it looks. Firstly, you will not need to write complex YAML headers often. Secondly, you can figure out settings that work for you and then copy and paste them into other documents. There are also ways for YAML options to be used for all documents in a <a href="https://quarto.org/docs/projects/quarto-projects.html">project</a> such as a website.</p>
+</section><section id="markdown" class="level3"><h3 class="anchored" data-anchor-id="markdown">2. Markdown</h3>
+<p>Unlike R scripts where default text is code, the default text in Quarto documents is Markdown. Use <a href="./markdown-syntax.html">Resources: Markdown syntax</a> for Markdown foundations, and look at the <a href="https://quarto.org/docs/authoring/markdown-basics.html">Quarto Markdown documentation</a> for more details on the style of Markdown you can use in Quarto documents.</p>
+</section><section id="code-chunks" class="level3"><h3 class="anchored" data-anchor-id="code-chunks">3. Code chunks</h3>
+<p>With Markdown as the default editing environment, your code must be placed in code chunks set off by three back ticks (```). They look like this:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="dv">24</span> <span class="sc">+</span> <span class="dv">87</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 111</code></pre>
+</div>
+</div>
+<p>You can create code chunks in RStudio with:</p>
+<ol type="1">
+<li>The keyboard shortcut: <code>Cmd + Option + I</code> or <code>Ctrl + Alt + I</code>.</li>
+<li>Typing the chunk delimiters <code>```{r}</code> and <code>```</code>.</li>
+</ol>
+<p>Once inside a code chunk, text functions as it does in an R script. Comments are made with <code>#</code>. Everything else is code. You can run the expressions in a chunk with <code>Cmd + Return</code> or <code>Ctrl + Enter</code>. Or you can run the entire chunk with the <strong>play</strong> button at the top right of the chunk. The output of the chunks will either be placed directly below the chunk or sent to the console. You can alter this in Global Options -&gt; R Markdown tab -&gt; Show output inline for all R Markdown documents checkbox. See also Other tweaks section in <a href="./rstudio-setup.html#other-tweaks">Setting up RStudio for success</a>.</p>
+<p>The primary difference between code chunks and R scripts is that code chunks can have special comments created with <code>#|</code> that provide options for the output of the chunk. These are formatted as YAML and override any defaults set in the YAML header. You can see the full list of options in the <a href="https://quarto.org/docs/reference/cells/cells-knitr.html">Quarto documentation</a>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: some-math</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="dv">24</span> <span class="sc">+</span> <span class="dv">87</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The <code>label</code> option names the chunk, making it easier to refer to the chunk and to see it in the outline in RStudio. <code>label</code> names should be short and not include spaces. It is recommended to use a dash between words.</p>
+<p>The main options that affect the <strong>execution</strong> of code are:</p>
+<ul>
+<li>
+<code>eval: false</code> prevents the code from being run. The code displays but does not run.</li>
+<li>
+<code>echo: false</code> prevents the code from being shown in the output, but the code is run and outputs are shown. This is useful when you want people to see the output but the code does not need to be read by the audience.</li>
+<li>
+<code>include: false</code> prevents the code and outputs from being shown, though the code is run. This is useful for setup code.</li>
+<li>
+<code>message: false</code> or <code>warning: false</code> prevents messages or warnings from being output in the rendered document.</li>
+</ul>
+<p>The other options you might want to change are the <strong>figure output</strong>. See <a href="https://r4ds.hadley.nz/quarto.html#sec-figures"><em>R for Data Science</em></a> for more details.</p>
+<ul>
+<li>To set the size of the plot from ggplot2:
+<ul>
+<li><code>fig-width: 6</code></li>
+<li>
+<code>fig-asp: 0.618</code>: Aspect ration of width to height. With this you do not need to set the width. <code>0.618</code> is the golden ratio.</li>
+<li>
+<code>fig-width: 4</code>: But you can set width instead of aspect.</li>
+</ul>
+</li>
+<li>Control the output size within the output document:
+<ul>
+<li>
+<code>out-width: "70%"</code>: This would take up 70% of the content area.</li>
+<li>
+<code>fig-align: center</code>: How to align the plots.</li>
+</ul>
+</li>
+</ul></section></section><section id="output-formats" class="level2" data-number="13.4"><h2 data-number="13.4" class="anchored" data-anchor-id="output-formats">
+<span class="header-section-number">13.4</span> Output formats</h2>
+<p>You can create a number of different types of documents from Quarto documents. The default is HTML documents ready to be put on the web or viewed through your browser, but you can also make <a href="https://quarto.org/docs/output-formats/pdf-basics.html">PDFs</a>, <a href="https://quarto.org/docs/presentations/">presentations</a>, <a href="https://quarto.org/docs/dashboards/">dashboards</a>, and even <a href="https://quarto.org/docs/output-formats/ms-word.html">Word documents</a>. It is also possible to combine multiple Quarto documents together into <a href="https://quarto.org/docs/projects/quarto-projects.html">projects</a> such as <a href="https://quarto.org/docs/websites/">websites</a> and <a href="https://quarto.org/docs/books/">books</a>.</p>
+<p>You control the output of individual documents either in the document YAML or in rendering the document via the command line. Generally, you will want to use the document YAM using the <code>format</code> key.</p>
+<ul>
+<li>HTML: <code>format: html</code>
+</li>
+<li>PDF: <code>format: pdf</code> or <code>format: typst</code>
+</li>
+<li>Presentation: <code>format: revealjs</code>
+</li>
+<li>Word: <code>format: docx</code>
+</li>
+</ul>
+<p>Most options within the YAML are shared across output formats, but not all formats have all the capabilities. Look at the <a href="https://quarto.org/docs/reference/">reference documentation</a> for each type to see the available options.</p>
+<section id="a-note-on-pdf-formats" class="level3"><h3 class="anchored" data-anchor-id="a-note-on-pdf-formats">A note on PDF formats</h3>
+<p>If you want to output a PDF, you have two different choices, <code>format: pdf</code> uses <a href="https://pandoc.org">Pandoc</a> to create the PDF; <code>format: typst</code> uses <a href="https://typst.app">Typst</a>. The Pandoc format has more options, but Typst is a more modern PDF engine and has nicer looking defaults.</p>
+</section><section id="project-outputs" class="level3"><h3 class="anchored" data-anchor-id="project-outputs">Project outputs</h3>
+<p>Projects contain multiple Quarto documents and use a <code>_quarto.yml</code> file to share the YAML metadata options across all of the documents within the project. If you want different YAML options in one or more documents within the project, you can modify the YAML in the document itself. The options written in the document will take precedence over those written in the <code>_quarto.yml</code> file. This means that generally the YAML heading for individual documents in a project might only have a title.</p>
+</section></section><section id="conclusion" class="level2" data-number="13.5"><h2 data-number="13.5" class="anchored" data-anchor-id="conclusion">
+<span class="header-section-number">13.5</span> Conclusion</h2>
+<p>This is just the tip of the iceberg for what you can do with Quarto documents. But you can do a lot with these foundations. Check out the <a href="#resources">Resources</a> above for places to start if this document does not cover a question you have.</p>
+
+
+</section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><hr>
+<ol>
+<li id="fn1"><p>This website is a Quarto book.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>See the <a href="#output-formats">Output formats</a> section for more details on output formats.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./markdown-syntax.html" class="pagination-link" aria-label="Markdown Syntax">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Markdown Syntax</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

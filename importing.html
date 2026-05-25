@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.36">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>3&nbsp; Importing data – Data Science for Public Good</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./wrangling.html" rel="next">
+<link href="./rstudio-guide.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-7bffad5ec597a6be8e2440dc65fe4f2c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+</head>
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./rstudio-setup.html">R and RStudio</a></li><li class="breadcrumb-item"><a href="./importing.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Importing data</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Data Science for Public Good</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">R and RStudio</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rstudio-setup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Setting up RStudio for success</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rstudio-guide.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Using R in RStudio</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./importing.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Importing data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./wrangling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Wrangling data in the tidyverse</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ggplot2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Visualization with ggplot2</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ggplot2-color.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Colors with ggplot2</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Git and GitHub</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./git-overview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Git and GitHub: An overview</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./git-install.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Installing Git</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./git-setup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Setting up Git and GitHub</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./git-workflow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">The Git and GitHub workflow</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./git-glossary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Git glossary</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Markdown and Quarto</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./markdown-syntax.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Markdown Syntax</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./quarto-docs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Quarto documents</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+    </ul>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+<li>
+<a href="#resources" id="toc-resources" class="nav-link active" data-scroll-target="#resources"><span class="header-section-number">3.1</span> Resources</a>
+  <ul class="collapse">
+<li><a href="#importing-data-with-readr" id="toc-importing-data-with-readr" class="nav-link" data-scroll-target="#importing-data-with-readr">Importing data with readr</a></li>
+  <li><a href="#spreadsheets" id="toc-spreadsheets" class="nav-link" data-scroll-target="#spreadsheets">Spreadsheets</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#readr-example" id="toc-readr-example" class="nav-link" data-scroll-target="#readr-example"><span class="header-section-number">3.2</span> readr example</a>
+  <ul class="collapse">
+<li><a href="#locate-the-path-to-the-data-from-the-working-directory" id="toc-locate-the-path-to-the-data-from-the-working-directory" class="nav-link" data-scroll-target="#locate-the-path-to-the-data-from-the-working-directory">1. Locate the path to the data from the working directory</a></li>
+  <li><a href="#parsing" id="toc-parsing" class="nav-link" data-scroll-target="#parsing">Parsing</a></li>
+  <li><a href="#missing-values" id="toc-missing-values" class="nav-link" data-scroll-target="#missing-values">2. Missing values</a></li>
+  <li><a href="#column-types" id="toc-column-types" class="nav-link" data-scroll-target="#column-types">3. Column types</a></li>
+  <li><a href="#column-types-parsing-dates" id="toc-column-types-parsing-dates" class="nav-link" data-scroll-target="#column-types-parsing-dates">3. Column types: Parsing dates</a></li>
+  </ul>
+</li>
+  </ul></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./rstudio-setup.html">R and RStudio</a></li><li class="breadcrumb-item"><a href="./importing.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Importing data</span></a></li></ol></nav><div class="quarto-title">
+<h1 class="title">
+<span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Importing data</span>
+</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header><p>R comes with installed with data that you can practice with and various packages make data available, but you will quickly want to work with data you have on your own computer. The tidyverse has a set of packages to import rectangular data:</p>
+<ul>
+<li>
+<a href="https://readr.tidyverse.org">readr</a>: Import plain text data files such as comma-separated values (csv).</li>
+<li>
+<a href="https://readxl.tidyverse.org">readxl</a>: Import data from Excel. It is downloaded with the tidyverse, but you need to load it explicitly.</li>
+<li>
+<a href="https://googlesheets4.tidyverse.org">googlesheets4</a>: Import data from Google Sheets. This package needs to be installed separately with <code>install.packages("googlesheets4")</code>.</li>
+</ul>
+<p>Importing does two very important things:</p>
+<ol type="1">
+<li>It provides you with access to your data in your R session.</li>
+<li>It protects your data. Any changes you make to the data are on a copy of the data. You can only change the raw data that you read in by explicitly writing out data to the same file. To prevent this, we have separate <code>data-raw/</code> and <code>data/</code> folders. This means no more going to close a spreadsheet and being uncertain when the application asks if you want to save changes.</li>
+</ol>
+<p>There are three main tasks to perform in importing data in R and possibly a fourth if reading from a spreadsheet.</p>
+<ol type="1">
+<li>Locate the path to the data from the working directory.</li>
+<li>Declare how missing values are identified in the data if different from the default.</li>
+<li>Explicitly declare the column types if you want to override the default parsing.</li>
+<li>If reading in Excel or GoogleSheet data, you may want to identify the sheet and cell range of the data.</li>
+</ol>
+<section id="resources" class="level2" data-number="3.1"><h2 data-number="3.1" class="anchored" data-anchor-id="resources">
+<span class="header-section-number">3.1</span> Resources</h2>
+<p>Below you will find a fully worked out example using readr. readxl and googlesheets4 work similarly with the added complexity of spreadsheets and data permissions with GoogleSheets. Here are some important resources if you have questions importing data.</p>
+<section id="importing-data-with-readr" class="level3"><h3 class="anchored" data-anchor-id="importing-data-with-readr">Importing data with readr</h3>
+<ul>
+<li>Start with the example below, but also with the <a href="https://r4ds.hadley.nz/data-import.html">Data import</a> chapter of <em>R for Data Science</em>.</li>
+<li><a href="https://readr.tidyverse.org/index.html">readr documentation</a></li>
+<li><a href="https://here.r-lib.org/index.html">here package documentation</a></li>
+<li><a href="https://malco.io/articles/2018-11-05-why-should-i-use-the-here-package-when-i-m-already-using-projects">Malcolm Barrett - Why should I use the here package when I’m already using projects?</a></li>
+</ul></section><section id="spreadsheets" class="level3"><h3 class="anchored" data-anchor-id="spreadsheets">Spreadsheets</h3>
+<ul>
+<li>Start with the <a href="https://r4ds.hadley.nz/spreadsheets.html">Spreadsheets</a> chapter of <em>R for Data Science</em>.</li>
+<li><a href="https://readxl.tidyverse.org/index.html">readxl documentation</a></li>
+<li><a href="https://googlesheets4.tidyverse.org/index.html">googlesheets4 documentation</a></li>
+</ul></section></section><section id="readr-example" class="level2" data-number="3.2"><h2 data-number="3.2" class="anchored" data-anchor-id="readr-example">
+<span class="header-section-number">3.2</span> readr example</h2>
+<p>Let’s start with an example of reading in data using <code><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv()</a></code> from readr. We will be using this <a href="files/readr-example.csv">example dataset</a>. Right-click the link to download the file and place it in your <code>data-raw/</code> folder in a project.</p>
+<section id="locate-the-path-to-the-data-from-the-working-directory" class="level3"><h3 class="anchored" data-anchor-id="locate-the-path-to-the-data-from-the-working-directory">1. Locate the path to the data from the working directory</h3>
+<p>The first and main task is to locate where the data is. It is here that the benefits of <a href="./rstudio-setup.html#rstudio-projects">RStudio Projects</a> becomes clear. You want to use <strong>relative paths</strong> from your working directory to your data (such as <code>data-raw/readr-example.csv</code>) and not <strong>absolute paths</strong> (such as <code>Users/my_username/Documents/code/my-project/data-raw/readr-example.csv</code>). The former will work for anyone with the project folder. The latter only works for the specific individual computer and only with current folder structure.</p>
+<p>The first argument of <code><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv()</a></code> is the path to the data within quotation marks. Use <strong>tab complete</strong> to help you fill in the correct path. If you have downloaded the <a href="&quot;files/readr-example.csv&quot;">example dataset</a> and placed it in your <code>data-raw/</code> folder, you should be able to write <code>read_csv("data-")</code> and then type the Tab key to complete the path, selecting the correct file along the way.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="co"># Read the data without further specifications</span></span>
+<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"data-raw/readr-example.csv"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 20 Columns: 12
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr  (6): a, b, e, g, j, k
+dbl  (3): c, f, h
+lgl  (1): d
+dttm (1): l
+date (1): i
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+</div>
+<p>We get a tibble that is 20 rows and 12 columns and an overview of the column types that <code><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv()</a></code> guessed based on the data. Yay! We have successfully imported the data.</p>
+<section id="here-package" class="level4"><h4 class="anchored" data-anchor-id="here-package">Here package</h4>
+<p>An alternative approach that is even more robust is to use the <a href="https://here.r-lib.org">here package</a>, which helps to create paths to your data regardless of the organization of your project. The here package is particularly useful if you are working with <a href="https://quarto.org">Quarto</a> or <a href="https://rmarkdown.rstudio.com">R Markdown</a> documents, which render from the location of the document and not necessarily the top level of your project.</p>
+<p>The here package uses the <code><a href="https://here.r-lib.org/reference/here.html">here()</a></code> function, which takes the components of your path from the root of the project to the file as characters separated by commas. In this case, it would be: <code>here("data-raw", "readr-example.csv")</code>:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://here.r-lib.org/">here</a></span><span class="op">)</span></span>
+<span><span class="co"># Read the data with the here package</span></span>
+<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org/reference/here.html">here</a></span><span class="op">(</span><span class="st">"data-raw"</span>, <span class="st">"readr-example.csv"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section></section><section id="parsing" class="level3"><h3 class="anchored" data-anchor-id="parsing">Parsing</h3>
+<p>Let’s look at <code>data</code> to see how it did using the <code>glmpse()</code> function that turns a data frame on its side, making it easier to see all of the columns. You may want to go into the Files pane in RStudio and choose <code>View File</code> after clicking on <code>readr-example.csv</code> to see what the raw data looks like.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Look at the data</span></span>
+<span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 20
+Columns: 12
+$ a &lt;chr&gt; "p", "x", "e", "o", "v", "r", "h", "p", "u", "i", "f", "l", "z", "b"…
+$ b &lt;chr&gt; "b", "b", "d", "b", "d", "d", NA, "e", NA, "d", "d", NA, NA, NA, "c"…
+$ c &lt;dbl&gt; 95.15645, 71.06688, 15.56805, 57.60559, 91.12470, 40.04119, 70.75418…
+$ d &lt;lgl&gt; TRUE, FALSE, FALSE, TRUE, TRUE, TRUE, TRUE, TRUE, FALSE, FALSE, FALS…
+$ e &lt;chr&gt; "Asia", "none", "Africa", "Africa", "Americas", "Asia", "Asia", "Eur…
+$ f &lt;dbl&gt; 48, 36, 35, 46, 23, 36, 43, 43, 37, 48, 39, 43, 21, 49, 42, 20, 40, …
+$ g &lt;chr&gt; "$42,498.74", "$141,971.80", "$15,852.71", "$66,555.38", "$143,747.9…
+$ h &lt;dbl&gt; 14651220, 15820913, 15460815, 14631127, 13520326, 13350525, 13150320…
+$ i &lt;date&gt; 1585-05-06, 1366-12-10, 1606-06-05, 1675-01-14, 1400-05-12, 1578-09…
+$ j &lt;chr&gt; "20 January 1503", "23 April 1390", "4 July 1585", "20 October 1237"…
+$ k &lt;chr&gt; "Feb 4 1313", "Jun 17 1553", "Sep 18 1299", "Dec 1 1558", "Oct 21 12…
+$ l &lt;dttm&gt; 2025-05-16 02:57:00, 2025-04-28 23:26:00, 2025-09-22 13:17:00, 2025…</code></pre>
+</div>
+</div>
+<p>Going column by column:</p>
+<ul>
+<li>a: Looks good.</li>
+<li>b: Looks good. <code><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv()</a></code> correctly identified both <code>NA</code> and the one blank cell as missing data.</li>
+<li>c: Looks good.</li>
+<li>d: Looks good. <code>T</code> and <code>F</code> were correctly turned into a logical vector.</li>
+<li>e: Parsed as a character vector, but the value of <code>none</code> is missing data. Additionally, we could turn this into a factor.</li>
+<li>f: Parsed as a double-precision vector but is all whole numbers. We could denote this to an integer.</li>
+<li>g: Parsed as a character vector because of the presence of dollar signs and commas but is actually numeric data.</li>
+<li>h: Parsed as a numeric vector, but if you look closely, this is actually a date is the format of <code>yyyymmdd</code> without dashes.</li>
+<li>i: Correctly parsed as a date vector.</li>
+<li>j: Parsed as character vector but contains date data.</li>
+<li>k: Parsed as character vector but contains date data.</li>
+<li>l: Correctly parsed as date-time vector.</li>
+</ul>
+<p>We need to make some changes to our data. It would be possible to make these changes after reading in the data with our <a href="./wrangling.html">data wrangling</a> tools, or we can do it while reading in the data.</p>
+<p>This is also a good reminder that you need to check your data when you import it.</p>
+</section><section id="missing-values" class="level3"><h3 class="anchored" data-anchor-id="missing-values">2. Missing values</h3>
+<p>We can deal with the extra missing value from the data with the <code>na</code> argument that has defaults for both blank cells and <code>"NA"</code>. In this case, we need to add <code>"none"</code>. But we also need to be careful. We do not want to use only <code>"none"</code>; we want to add it to the default.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org/reference/here.html">here</a></span><span class="op">(</span><span class="st">"data-raw"</span>, <span class="st">"readr-example.csv"</span><span class="op">)</span>,</span>
+<span>         na <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">""</span>, <span class="st">"NA"</span>, <span class="st">"none"</span><span class="op">)</span><span class="op">)</span> <span class="co"># Add none as NA for column e</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 20 × 12
+   a     b         c d     e            f g             h i          j     k    
+   &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt; &lt;date&gt;     &lt;chr&gt; &lt;chr&gt;
+ 1 p     b      95.2 TRUE  Asia        48 $42,498… 1.47e7 1585-05-06 20 J… Feb …
+ 2 x     b      71.1 FALSE &lt;NA&gt;        36 $141,97… 1.58e7 1366-12-10 23 A… Jun …
+ 3 e     d      15.6 FALSE Africa      35 $15,852… 1.55e7 1606-06-05 4 Ju… Sep …
+ 4 o     b      57.6 TRUE  Africa      46 $66,555… 1.46e7 1675-01-14 20 O… Dec …
+ 5 v     d      91.1 TRUE  Americas    23 $143,74… 1.35e7 1400-05-12 27 J… Oct …
+ 6 r     d      40.0 TRUE  Asia        36 $46,013… 1.34e7 1578-09-14 26 J… Nov …
+ 7 h     &lt;NA&gt;   70.8 TRUE  Asia        43 $126,68… 1.32e7 1492-08-28 5 No… Aug …
+ 8 p     e      82.0 TRUE  Europe      43 $85,459… 1.37e7 1214-10-11 17 F… Feb …
+ 9 u     &lt;NA&gt;   96.9 FALSE Americas    37 $143,00… 1.56e7 1310-10-12 27 O… Nov …
+10 i     d      12.1 FALSE Americas    48 $162,34… 1.61e7 1299-01-20 25 S… Aug …
+11 f     d      36.4 FALSE Americas    39 $15,815… 1.56e7 1251-03-17 7 Ju… Apr …
+12 l     &lt;NA&gt;   36.6 FALSE &lt;NA&gt;        43 $168,76… 1.62e7 1341-03-12 25 J… Dec …
+13 z     &lt;NA&gt;   88.5 FALSE Asia        21 $8,913.… 1.21e7 1355-12-18 21 J… May …
+14 b     &lt;NA&gt;   23.7 TRUE  &lt;NA&gt;        49 $20,651… 1.33e7 1228-07-07 26 J… Aug …
+15 e     c      42.9 FALSE Americas    42 $82,921… 1.51e7 1423-09-03 19 S… Feb …
+16 j     d      43.1 TRUE  Europe      20 $165,14… 1.35e7 1309-05-14 26 F… Oct …
+17 u     b      46.3 FALSE Asia        40 $14,301… 1.27e7 1422-10-19 19 A… Mar …
+18 n     b      28.1 TRUE  Americas    38 $39,063… 1.36e7 1439-03-14 11 O… Jul …
+19 z     &lt;NA&gt;   91.4 FALSE Africa      32 $47,703… 1.43e7 1295-04-12 17 S… Oct …
+20 t     a      67.1 FALSE Asia        44 $75,697… 1.52e7 1524-10-09 15 F… Sep …
+# ℹ 1 more variable: l &lt;dttm&gt;</code></pre>
+</div>
+</div>
+</section><section id="column-types" class="level3"><h3 class="anchored" data-anchor-id="column-types">3. Column types</h3>
+<p><code><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv()</a></code> allows you to view exactly how it parsed the data and how you can change its guesses with <code><a href="https://readr.tidyverse.org/reference/spec.html">spec()</a></code>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://readr.tidyverse.org/reference/spec.html">spec</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>cols(
+  a = col_character(),
+  b = col_character(),
+  c = col_double(),
+  d = col_logical(),
+  e = col_character(),
+  f = col_double(),
+  g = col_character(),
+  h = col_double(),
+  i = col_date(format = ""),
+  j = col_character(),
+  k = col_character(),
+  l = col_datetime(format = "")
+)</code></pre>
+</div>
+</div>
+<p>This shows the functions used to parse each column. We can change the column type by changing the <code>col_*()</code> function used. The structure is very similar to the output of <code><a href="https://readr.tidyverse.org/reference/spec.html">spec()</a></code>. You can list the columns you want to change through the <code>col_types</code> argument either within the <code><a href="https://readr.tidyverse.org/reference/cols.html">cols()</a></code> function to keep all columns or <code><a href="https://readr.tidyverse.org/reference/cols.html">cols_only()</a></code> to only include the columns you explicitly specify. Let’s start by making column <code>e</code> a factor, <code>f</code> an integer, and <code>g</code> numeric. We will discuss dates more below.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org/reference/here.html">here</a></span><span class="op">(</span><span class="st">"data-raw"</span>, <span class="st">"readr-example.csv"</span><span class="op">)</span>,</span>
+<span>         na <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">""</span>, <span class="st">"NA"</span>, <span class="st">"none"</span><span class="op">)</span>, <span class="co"># Add none as NA for column e</span></span>
+<span>         col_types <span class="op">=</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/cols.html">cols</a></span><span class="op">(</span></span>
+<span>           e <span class="op">=</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/parse_factor.html">col_factor</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>           f <span class="op">=</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/parse_atomic.html">col_integer</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>           g <span class="op">=</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/parse_number.html">col_number</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>         <span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 20 × 12
+   a     b         c d     e            f       g       h i          j     k    
+   &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;fct&gt;    &lt;int&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;date&gt;     &lt;chr&gt; &lt;chr&gt;
+ 1 p     b      95.2 TRUE  Asia        48  42499.  1.47e7 1585-05-06 20 J… Feb …
+ 2 x     b      71.1 FALSE &lt;NA&gt;        36 141972.  1.58e7 1366-12-10 23 A… Jun …
+ 3 e     d      15.6 FALSE Africa      35  15853.  1.55e7 1606-06-05 4 Ju… Sep …
+ 4 o     b      57.6 TRUE  Africa      46  66555.  1.46e7 1675-01-14 20 O… Dec …
+ 5 v     d      91.1 TRUE  Americas    23 143748.  1.35e7 1400-05-12 27 J… Oct …
+ 6 r     d      40.0 TRUE  Asia        36  46013.  1.34e7 1578-09-14 26 J… Nov …
+ 7 h     &lt;NA&gt;   70.8 TRUE  Asia        43 126687.  1.32e7 1492-08-28 5 No… Aug …
+ 8 p     e      82.0 TRUE  Europe      43  85460.  1.37e7 1214-10-11 17 F… Feb …
+ 9 u     &lt;NA&gt;   96.9 FALSE Americas    37 143003.  1.56e7 1310-10-12 27 O… Nov …
+10 i     d      12.1 FALSE Americas    48 162346.  1.61e7 1299-01-20 25 S… Aug …
+11 f     d      36.4 FALSE Americas    39  15816.  1.56e7 1251-03-17 7 Ju… Apr …
+12 l     &lt;NA&gt;   36.6 FALSE &lt;NA&gt;        43 168766.  1.62e7 1341-03-12 25 J… Dec …
+13 z     &lt;NA&gt;   88.5 FALSE Asia        21   8913.  1.21e7 1355-12-18 21 J… May …
+14 b     &lt;NA&gt;   23.7 TRUE  &lt;NA&gt;        49  20651.  1.33e7 1228-07-07 26 J… Aug …
+15 e     c      42.9 FALSE Americas    42  82922.  1.51e7 1423-09-03 19 S… Feb …
+16 j     d      43.1 TRUE  Europe      20 165148.  1.35e7 1309-05-14 26 F… Oct …
+17 u     b      46.3 FALSE Asia        40  14301   1.27e7 1422-10-19 19 A… Mar …
+18 n     b      28.1 TRUE  Americas    38  39064.  1.36e7 1439-03-14 11 O… Jul …
+19 z     &lt;NA&gt;   91.4 FALSE Africa      32  47704.  1.43e7 1295-04-12 17 S… Oct …
+20 t     a      67.1 FALSE Asia        44  75697.  1.52e7 1524-10-09 15 F… Sep …
+# ℹ 1 more variable: l &lt;dttm&gt;</code></pre>
+</div>
+</div>
+</section><section id="column-types-parsing-dates" class="level3"><h3 class="anchored" data-anchor-id="column-types-parsing-dates">3. Column types: Parsing dates</h3>
+<p>Dates can be difficult to parse because there are so many different ways to write dates. Therefore, we may need to do a bit more work and tell <code><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv()</a></code> not only that a column is a date, but also what format it is in. You declare the format using abbreviations defined by the POSIX standard. These are:</p>
+<ul>
+<li>Year: <code>"%Y"</code> (4 digits); <code>"%y"</code> (2 digits)</li>
+<li>Month: <code>"%m"</code> (2 digits), <code>"%b"</code> (abbreviated name), <code>"%B"</code> (full name)</li>
+<li>Day: <code>"%d"</code> (2 digits), <code>"%e"</code> (optional leading space), <code>"%a"</code> (abbreviated name)</li>
+<li>Shortcuts:
+<ul>
+<li>
+<code>"%D"</code> = <code>"%m/%d/%y"</code> or 02/23/26</li>
+<li>
+<code>"%F"</code> = <code>"%Y-%m-%d"</code> or 2026-02-23</li>
+<li>
+<code>"%x"</code> = <code>"%y/%m/%d"</code> or 26/02/23</li>
+</ul>
+</li>
+</ul>
+<p>See <a href="https://readr.tidyverse.org/reference/parse_datetime.html">date format specifications</a> in the readr documentation for more choices and details.</p>
+<p>In the case of the example data we can use:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org/reference/here.html">here</a></span><span class="op">(</span><span class="st">"data-raw"</span>, <span class="st">"readr-example.csv"</span><span class="op">)</span>,</span>
+<span>         na <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">""</span>, <span class="st">"NA"</span>, <span class="st">"none"</span><span class="op">)</span>, <span class="co"># Add none as NA for column e</span></span>
+<span>         col_types <span class="op">=</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/cols.html">cols</a></span><span class="op">(</span></span>
+<span>           e <span class="op">=</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/parse_factor.html">col_factor</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>           f <span class="op">=</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/parse_atomic.html">col_integer</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>           g <span class="op">=</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/parse_number.html">col_number</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>           h <span class="op">=</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/parse_datetime.html">col_date</a></span><span class="op">(</span><span class="st">"%Y%m%d"</span><span class="op">)</span>, <span class="co"># date as 8 digit number (20260223)</span></span>
+<span>           <span class="co"># i is correctly parsed as 2026-02-23</span></span>
+<span>           j <span class="op">=</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/parse_datetime.html">col_date</a></span><span class="op">(</span><span class="st">"%d %B %Y"</span><span class="op">)</span>, <span class="co"># 23 February 2026</span></span>
+<span>           k <span class="op">=</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/parse_datetime.html">col_date</a></span><span class="op">(</span><span class="st">"%b %d %Y"</span><span class="op">)</span> <span class="co"># Feb 23 2026</span></span>
+<span>           <span class="co"># l is correctly parsed as datetime (2026-02-23 14:00)</span></span>
+<span>         <span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 20 × 12
+   a     b         c d     e           f      g h          i          j         
+   &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;fct&gt;   &lt;int&gt;  &lt;dbl&gt; &lt;date&gt;     &lt;date&gt;     &lt;date&gt;    
+ 1 p     b      95.2 TRUE  Asia       48 4.25e4 1465-12-20 1585-05-06 1503-01-20
+ 2 x     b      71.1 FALSE &lt;NA&gt;       36 1.42e5 1582-09-13 1366-12-10 1390-04-23
+ 3 e     d      15.6 FALSE Africa     35 1.59e4 1546-08-15 1606-06-05 1585-07-04
+ 4 o     b      57.6 TRUE  Africa     46 6.66e4 1463-11-27 1675-01-14 1237-10-20
+ 5 v     d      91.1 TRUE  Americ…    23 1.44e5 1352-03-26 1400-05-12 1394-07-27
+ 6 r     d      40.0 TRUE  Asia       36 4.60e4 1335-05-25 1578-09-14 1593-07-26
+ 7 h     &lt;NA&gt;   70.8 TRUE  Asia       43 1.27e5 1315-03-20 1492-08-28 1237-11-05
+ 8 p     e      82.0 TRUE  Europe     43 8.55e4 1370-01-09 1214-10-11 1650-02-17
+ 9 u     &lt;NA&gt;   96.9 FALSE Americ…    37 1.43e5 1562-05-23 1310-10-12 1660-10-27
+10 i     d      12.1 FALSE Americ…    48 1.62e5 1608-06-21 1299-01-20 1263-09-25
+11 f     d      36.4 FALSE Americ…    39 1.58e4 1559-05-08 1251-03-17 1235-06-07
+12 l     &lt;NA&gt;   36.6 FALSE &lt;NA&gt;       43 1.69e5 1620-05-18 1341-03-12 1455-07-25
+13 z     &lt;NA&gt;   88.5 FALSE Asia       21 8.91e3 1214-05-25 1355-12-18 1242-06-21
+14 b     &lt;NA&gt;   23.7 TRUE  &lt;NA&gt;       49 2.07e4 1333-08-10 1228-07-07 1606-01-26
+15 e     c      42.9 FALSE Americ…    42 8.29e4 1506-05-03 1423-09-03 1411-09-19
+16 j     d      43.1 TRUE  Europe     20 1.65e5 1350-09-21 1309-05-14 1480-02-26
+17 u     b      46.3 FALSE Asia       40 1.43e4 1268-03-06 1422-10-19 1512-08-19
+18 n     b      28.1 TRUE  Americ…    38 3.91e4 1356-02-05 1439-03-14 1378-10-11
+19 z     &lt;NA&gt;   91.4 FALSE Africa     32 4.77e4 1426-05-17 1295-04-12 1252-09-17
+20 t     a      67.1 FALSE Asia       44 7.57e4 1521-10-04 1524-10-09 1412-02-15
+# ℹ 2 more variables: k &lt;date&gt;, l &lt;dttm&gt;</code></pre>
+</div>
+</div>
+<p>This example shows the flexibility of <code><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv()</a></code>, the importance of checking your data, and the complexity of dates. It may not look as nice, but there are reasons to prefer the format of column <code>h</code>, making a date as an 8 digit number in the form of a four-digit year, a two-digit month, and a two-digit day. This way spreadsheets will never interpret your data as dates.</p>
+
+
+</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./rstudio-guide.html" class="pagination-link" aria-label="Using R in RStudio">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Using R in RStudio</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./wrangling.html" class="pagination-link" aria-label="Wrangling data in the tidyverse">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Wrangling data in the tidyverse</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

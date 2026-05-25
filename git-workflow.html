@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.36">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>10&nbsp; The Git and GitHub workflow – Data Science for Public Good</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./git-glossary.html" rel="next">
+<link href="./git-setup.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-7bffad5ec597a6be8e2440dc65fe4f2c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+</head>
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./git-overview.html">Git and GitHub</a></li><li class="breadcrumb-item"><a href="./git-workflow.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">The Git and GitHub workflow</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Data Science for Public Good</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">R and RStudio</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rstudio-setup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Setting up RStudio for success</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rstudio-guide.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Using R in RStudio</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./importing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Importing data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./wrangling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Wrangling data in the tidyverse</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ggplot2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Visualization with ggplot2</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ggplot2-color.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Colors with ggplot2</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Git and GitHub</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./git-overview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Git and GitHub: An overview</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./git-install.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Installing Git</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./git-setup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Setting up Git and GitHub</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./git-workflow.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">The Git and GitHub workflow</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./git-glossary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Git glossary</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Markdown and Quarto</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./markdown-syntax.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Markdown Syntax</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./quarto-docs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Quarto documents</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+    </ul>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+<li><a href="#tldr" id="toc-tldr" class="nav-link active" data-scroll-target="#tldr"><span class="header-section-number">10.1</span> TL;DR</a></li>
+  <li>
+<a href="#github-first" id="toc-github-first" class="nav-link" data-scroll-target="#github-first"><span class="header-section-number">10.2</span> GitHub first</a>
+  <ul class="collapse">
+<li><a href="#make-a-new-repository-on-github" id="toc-make-a-new-repository-on-github" class="nav-link" data-scroll-target="#make-a-new-repository-on-github">1. Make a new repository on GitHub</a></li>
+  <li><a href="#new-rstudio-project-from-the-github-repository" id="toc-new-rstudio-project-from-the-github-repository" class="nav-link" data-scroll-target="#new-rstudio-project-from-the-github-repository">2. New RStudio project from the GitHub repository</a></li>
+  <li><a href="#make-local-changes" id="toc-make-local-changes" class="nav-link" data-scroll-target="#make-local-changes">3. Make local changes</a></li>
+  <li><a href="#pull-any-changes-from-github" id="toc-pull-any-changes-from-github" class="nav-link" data-scroll-target="#pull-any-changes-from-github">4. Pull any changes from GitHub</a></li>
+  <li><a href="#push-local-changes-to-github" id="toc-push-local-changes-to-github" class="nav-link" data-scroll-target="#push-local-changes-to-github">5. Push local changes to GitHub</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#local-first" id="toc-local-first" class="nav-link" data-scroll-target="#local-first"><span class="header-section-number">10.3</span> Local first</a>
+  <ul class="collapse">
+<li><a href="#initialize-your-project-as-a-git-project" id="toc-initialize-your-project-as-a-git-project" class="nav-link" data-scroll-target="#initialize-your-project-as-a-git-project">1. Initialize your project as a Git project</a></li>
+  <li><a href="#ignore-files" id="toc-ignore-files" class="nav-link" data-scroll-target="#ignore-files">2. Ignore files</a></li>
+  <li><a href="#stage-and-commit" id="toc-stage-and-commit" class="nav-link" data-scroll-target="#stage-and-commit">3. Stage and commit</a></li>
+  <li><a href="#connect-to-github" id="toc-connect-to-github" class="nav-link" data-scroll-target="#connect-to-github">4. Connect to GitHub</a></li>
+  </ul>
+</li>
+  <li><a href="#the-ongoing-workflow" id="toc-the-ongoing-workflow" class="nav-link" data-scroll-target="#the-ongoing-workflow"><span class="header-section-number">10.4</span> The ongoing workflow</a></li>
+  </ul></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./git-overview.html">Git and GitHub</a></li><li class="breadcrumb-item"><a href="./git-workflow.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">The Git and GitHub workflow</span></a></li></ol></nav><div class="quarto-title">
+<h1 class="title">
+<span class="chapter-number">10</span>&nbsp; <span class="chapter-title">The Git and GitHub workflow</span>
+</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header><p>This page will break down the basic Git and GitHub workflow, concentrating on the workflow using R and RStudio. It will discuss three different interfaces for working with Git and GitHub: the command line, the <a href="https://usethis.r-lib.org/reference/index.html#git-and-github">usethis package</a> helper functions, and RStudio’s graphical Git interface.</p>
+<ul>
+<li>Command line interface commands look like <code>git command option</code> and will be run in the <strong>Terminal</strong> tab in RStudio.</li>
+<li>The usethis package functions all take the form of <code>use_*()</code>. They are R functions that do the command line commands for you. They will be run in the <strong>Console</strong> tab in RStudio.</li>
+<li>The graphical Git interface in RStudio is found in the Git tab in the upper-right pane. The project must be initialized as a Git project for the tab to appear. See <a href="#fig-git-pane" class="quarto-xref">Figure&nbsp;<span>10.2</span></a>.</li>
+</ul>
+<section id="tldr" class="level2" data-number="10.1"><h2 data-number="10.1" class="anchored" data-anchor-id="tldr">
+<span class="header-section-number">10.1</span> TL;DR</h2>
+<p>The basic steps for using Git are fairly straightforward, but they do involve more overhead than you will be used to in working on a project. One way to think about it is that Git forces you to be explicit about organizing the changes you make to your project.</p>
+<ol type="1">
+<li>Initialize your repository (project folder) as a Git project and connect to GitHub.</li>
+<li>Make changes to the documents in the folder, making sure to save the files as you go along using File -&gt; Save, the save file button in RStudio, or the <code>Cmd/Ctrl + S</code> keyboard shortcut.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>
+</li>
+<li>Add the changed files that you want to be a part of a commit to the <em>stage</em>.</li>
+<li>
+<em>Commit</em> those changed files as a save state with a commit message.</li>
+<li>Repeat steps 2–4.</li>
+<li>Pull in any possible changes made by others on the GitHub repository.</li>
+<li>Push your changes to GitHub repository.</li>
+</ol>
+<p>There are many different ways you can go about doing these foundational steps. Adding in GitHub to the mix brings in further complexity. Do you create the repository on GitHub first or on your computer. Let’s go through creating a repository on <a href="#github-first">GitHub first</a>, which makes things a bit easier because each step actually combines multiple steps into one. Then, we will go through how to get a project on your computer onto GitHub.</p>
+<p>For more background, see the options described in <a href="https://happygitwithr.com/usage-intro">Happy Git</a>.</p>
+</section><section id="github-first" class="level2" data-number="10.2"><h2 data-number="10.2" class="anchored" data-anchor-id="github-first">
+<span class="header-section-number">10.2</span> GitHub first</h2>
+<p>These instructions follow <a href="https://happygitwithr.com/new-github-first">Happy Git: New project, GitHub first</a>.</p>
+<section id="make-a-new-repository-on-github" class="level3"><h3 class="anchored" data-anchor-id="make-a-new-repository-on-github">1. Make a new repository on GitHub</h3>
+<ol type="1">
+<li>Go to <a href="https://github.com">GitHub</a> and make sure you are signed in. In the upper-right click on the plus button and select <code>New Repository</code>.</li>
+<li>Name your repository using the naming rules we have already defined. Make it short with <strong>no</strong> spaces, use lowercase letters.</li>
+<li>Under configuration, you can keep everything as is, but select Add README to On.</li>
+<li>Select Create Repository.
+<ul>
+<li>You will now be taken to the GitHub repository for your project.</li>
+<li>This initialize the repository and makes the first commit.</li>
+</ul>
+</li>
+<li>Click on the <span style="color:green"><strong>green Code button</strong></span> on the top right.
+<ul>
+<li>Make sure HTTPS is selected.</li>
+<li>Copy the URL to your clipboard.</li>
+</ul>
+</li>
+</ol></section><section id="new-rstudio-project-from-the-github-repository" class="level3"><h3 class="anchored" data-anchor-id="new-rstudio-project-from-the-github-repository">2. New RStudio project from the GitHub repository</h3>
+<p>This step combines a number of steps that are usually separate. It creates a new folder that is an RStudio project, creates the connection between that project folder and the GitHub repository, and downloads the README we created in step 1. We can do this all with <code><a href="https://usethis.r-lib.org/reference/create_from_github.html">usethis::create_from_github()</a></code>. Paste the url you copied from the GitHub repository that ends in <code>.git</code> into the first argument and choose where to put the new repository in the second argument.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">create_from_github</span><span class="op">(</span></span>
+<span>  <span class="st">"https://github.com/YOU/YOUR_REPO.git"</span>,</span>
+<span>  destdir <span class="op">=</span> <span class="st">"~/path/to/folder/"</span></span>
+<span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>You should now be in a new RStudio project and in the upper-right pane you should have a Git tab.</p>
+</section><section id="make-local-changes" class="level3"><h3 class="anchored" data-anchor-id="make-local-changes">3. Make local changes</h3>
+<ol type="1">
+<li>Make changes to your files. Create new files.</li>
+<li>Add the changed files to the stage by going to the RStudio Git tab and clicking on the check boxes alongside the files that have been modified.</li>
+<li>Optionally look at the changes that have been made since the last commit by clicking on the <code>Diff</code> button above the list of files.</li>
+<li>If not already in the Commit dialogue window, click on the Commit button.</li>
+<li>Type in a commit message in the message box on the right and then click the Commit button.</li>
+<li>Repeat steps 1–5 as many times as you want.</li>
+</ol></section><section id="pull-any-changes-from-github" class="level3"><h3 class="anchored" data-anchor-id="pull-any-changes-from-github">4. Pull any changes from GitHub</h3>
+<p>Before pushing your changes to GitHub, it is a good idea to pull in any changes that others have made to the GitHub repository while you have been doing your work.</p>
+<ol type="1">
+<li>Click on the blue <code>Pull</code> button in the RStudio Git tab.</li>
+<li>Deal with any conflicts.</li>
+</ol></section><section id="push-local-changes-to-github" class="level3"><h3 class="anchored" data-anchor-id="push-local-changes-to-github">5. Push local changes to GitHub</h3>
+<p>There is no hard and fast rule for when you should push. Usually less often than you commit. It is more complex to change things back after you push.</p>
+<ol type="1">
+<li>Click on the green <code>Push</code> button in the RStudio Git tab to send your changes to GitHub.</li>
+<li>Confirm that the changes are on GitHub by going to the url of the repository.</li>
+</ol>
+<p>You can now repeat steps 3 and 4 to make local changes and push to GitHub.</p>
+</section></section><section id="local-first" class="level2" data-number="10.3"><h2 data-number="10.3" class="anchored" data-anchor-id="local-first">
+<span class="header-section-number">10.3</span> Local first</h2>
+<p>These instructions follow <a href="https://happygitwithr.com/new-github-first">Happy Git: New project, Existing project, GitHub last</a>.</p>
+<section id="initialize-your-project-as-a-git-project" class="level3"><h3 class="anchored" data-anchor-id="initialize-your-project-as-a-git-project">1. Initialize your project as a Git project</h3>
+<p>If it is a new RStudio project and a new folder, you can check on the Create a Git repository checkbox in the creation process. Your project will be set up as a Git repository from the beginning.</p>
+<p>If it is a project you have already worked on (such as <code>r-notes</code>), open your project in RStudio. In the console run:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://usethis.r-lib.org">usethis</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_git.html">use_git</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>You will be asked if you want to commit your files. In a larger project like <code>r-notes</code> you will want to do this manually, so select the number corresponding to no. In <a href="#fig-use-git" class="quarto-xref">Figure&nbsp;<span>10.1</span></a> this would be 2: Absolutely Not or 3: Negative. You do, however, want to restart RStudio.</p>
+<p>The <code><a href="https://usethis.r-lib.org/reference/use_git.html">use_git()</a></code> function runs <code>git init</code> on the command line and also adds a <code>.gitignore</code> file with good defaults ignored. If you ran <code>git init</code> in the Terminal tab, you can run <code><a href="https://usethis.r-lib.org/reference/use_git_ignore.html">use_git_ignore()</a></code> to do the same thing. You should now have a Git tab in the upper-right pane and it should look like <a href="#fig-git-pane" class="quarto-xref">Figure&nbsp;<span>10.2</span></a>.</p>
+<div class="quarto-layout-panel" data-layout="[65,35]">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 65.0%;justify-content: flex-start;">
+<div id="fig-use-git" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A screen shot of the RStudio console after running use_git(). It shows options for what to do with uncommitted files. 1 is For sure, 2 is Absolutely not, and 3 is Negative.">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-use-git-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="files/img/use-git.png" class="img-fluid figure-img" alt="A screen shot of the RStudio console after running use_git(). It shows options for what to do with uncommitted files. 1 is For sure, 2 is Absolutely not, and 3 is Negative.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-use-git-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;10.1: The output from running use_git().
+</figcaption></figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 35.0%;justify-content: flex-start;">
+<div id="fig-git-pane" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A screen shot of the RStudio Git and Files pane showing the state of things after initializing a project as a git repository.">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-git-pane-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="files/img/git-pane.png" class="img-fluid figure-img" alt="A screen shot of the RStudio Git and Files pane showing the state of things after initializing a project as a git repository.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-git-pane-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;10.2: The Git tab in RStudio with files yet to be committed.
+</figcaption></figure>
+</div>
+</div>
+</div>
+</div>
+</section><section id="ignore-files" class="level3"><h3 class="anchored" data-anchor-id="ignore-files">2. Ignore files</h3>
+<p>There will be files you will not want to track via Git. In particular, data files, especially larger ones, and files produced by other files, such as the html output from Quarto documents. You can add specific files, folders, or file types to your <code>.gitignore</code> file.</p>
+<ol type="1">
+<li>Ignore data folders
+<ul>
+<li>Add <code>data-raw/</code> to a new line in <code>.gitignore</code>
+</li>
+</ul>
+</li>
+<li>Ignore Quarto produced files
+<ul>
+<li>Add <code>*_files/</code> and <code>*.html</code> on new lines in <code>.gitignore</code>. The asterisk stands in for any character, so we ar ignoring all folders that end in <code>_files</code> and all HTML files.</li>
+</ul>
+</li>
+</ol></section><section id="stage-and-commit" class="level3"><h3 class="anchored" data-anchor-id="stage-and-commit">3. Stage and commit</h3>
+<p>Now it is time to stage and commit the files. Remember that this is a two step process. Stage the files, then commit the changes.</p>
+<ol type="1">
+<li>Stage the files
+<ul>
+<li>
+<code>git add filename</code> in the Terminal tab</li>
+<li>Or click on the Staged checkbox in the Git tab in RStudio.</li>
+</ul>
+</li>
+<li>Commit
+<ul>
+<li>
+<code>git commit -m "First commit"</code> in the Terminal tab</li>
+<li>Or click on the Commit button in the Git tab in RStudio and then write a commit message.</li>
+</ul>
+</li>
+<li>Check the status of the project with <code>git status</code> in the Terminal tab
+<ul>
+<li>This should return “nothing to commit, working tree clean”.</li>
+</ul>
+</li>
+</ol></section><section id="connect-to-github" class="level3"><h3 class="anchored" data-anchor-id="connect-to-github">4. Connect to GitHub</h3>
+<p>There is a fast way and a manual way to do this. Follow these instructions to do it manually, but you can also run <code><a href="https://usethis.r-lib.org/reference/use_github.html">use_github()</a></code>. This will:</p>
+<ul>
+<li>Create a new repository on GitHub with the same name as you local project folder.</li>
+<li>Set that repository as the remote server for the project named <code>origin</code>.</li>
+<li>Push the contents of your local project to GitHub.</li>
+<li>Open a browser to the repository on GitHub.</li>
+</ul>
+<p>It can do all of this because Git knows who you are and usethis has access to your GitHub personal access token. This is really useful, but it is also helpful to know what all of these steps are, so let’s go through them using the command line interface.</p>
+<ol type="1">
+<li>Go to GitHub and create a new repository
+<ol type="1">
+<li>Clicking on the plus button in the upper-right and select <code>New Repository</code>.</li>
+<li>Name the repository the <strong>exact same name as the RStudio project folder</strong>, such as <code>r-notes</code>.</li>
+<li>Select Create Repository, making sure <em>not</em> to add anything. It should be an empty repository.</li>
+</ol>
+</li>
+<li>Add the GitHub repository as a remote server
+<ol type="1">
+<li>Click on the <span style="color:green"><strong>green Code button</strong></span> on the top right and copy the HTTPS URL.</li>
+<li>In the Terminal tab of the RStudio project that you are connecting to GitHub run <code>git remote add origin your-url-here</code>
+<ul>
+<li>This adds a remote server named <code>origin</code> at the url you provide.</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>Check the status of the remote server.
+<ul>
+<li>Run <code>git remote -v</code> in the Terminal tab.</li>
+<li>The output to this should be the name of the remote (<code>origin</code>) followed by the Git url. You should have both fetch and push capabilities.</li>
+</ul>
+</li>
+<li>Push local files to GitHub
+<ul>
+<li>Run <code>git push --set-upstream origin main</code> in the Terminal tab.</li>
+<li>Use of <code>--set-upstream</code> makes it so you only need to use the simple command <code>git push</code> or <code>git pull</code> in the future instead of <code>git push origin main</code>, where <code>origin</code> is the name of the remote server and <code>main</code> is the branch that you are pushing.</li>
+</ul>
+</li>
+<li>Check that changes propagated to GitHub.
+<ul>
+<li>Celebrate 🎉 your success if they did.</li>
+</ul>
+</li>
+</ol></section></section><section id="the-ongoing-workflow" class="level2" data-number="10.4"><h2 data-number="10.4" class="anchored" data-anchor-id="the-ongoing-workflow">
+<span class="header-section-number">10.4</span> The ongoing workflow</h2>
+<p>Now you can do your work and practice the Git and GitHub workflow. The details will differ by project and the types of documents you are working with, but the general outlines of the workflow are:</p>
+<ol type="1">
+<li>
+<strong>Make changes</strong> to your project, saving the files as you go along.</li>
+<li>
+<strong>Check the output</strong> of the changes.
+<ul>
+<li>
+<a href="./rstudio-setup.html#scripts-and-reproducibility">R scripts</a>: check that the code is doing what you want. To be extra sure, restart your R session to make sure the code is not dependent on an object you created without writing it in the script.</li>
+<li>
+<a href="./quarto-docs.html">Quarto documents</a>: check that the quarto document Renders and looks like what you want.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>
+</li>
+<li>
+<a href="quarto-websites.qmd#render-and-preview-your-website">Quarto websites</a>: check that the website builds correctly by rendering and previewing the site from the Build tab in the Environment panel.</li>
+</ul>
+</li>
+<li>Make a <strong>commit</strong> consisting of a defined set of changes. This is a two-step process.
+<ol type="1">
+<li>Add the files to the <strong>stage</strong> that you want to be part of a commit.</li>
+<li>Commit the staged files with a message describing the changes.</li>
+</ol>
+</li>
+<li>
+<strong>Repeat steps 1–3</strong> until you feel you have made good progress.</li>
+<li>
+<strong>Pull</strong> any changes made by others on GitHub.
+<ul>
+<li>Deal with any conflicts.</li>
+</ul>
+</li>
+<li>
+<strong>Push</strong> the changes to GitHub.
+<ul>
+<li>Take extra care with the commit before pushing to GitHub to ensure that everything is working and rendering correctly.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>
+</li>
+</ul>
+</li>
+<li>
+<strong>Repeat</strong> steps 1–6.</li>
+</ol>
+
+
+</section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><hr>
+<ol>
+<li id="fn1"><p>This is usually the only and, therefore, the last step in working with files, but Git is more involved, as you will see on this page.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Rendering a Quarto document is the same as restarting R and running an R script from top to bottom. If there are any problems, the render will not work. Doing this often makes it easier to identify where problems are occurring.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>If something does break, or you later find a problem, there is no need to panic. You can always make a change to fix things. However, changes, especially rewinding changes, are always easier when they are only on your local computer. When changes are on both GitHub and your computer, things get a little more complex.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./git-setup.html" class="pagination-link" aria-label="Setting up Git and GitHub">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Setting up Git and GitHub</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./git-glossary.html" class="pagination-link" aria-label="Git glossary">
+        <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Git glossary</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>
