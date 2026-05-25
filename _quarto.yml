@@ -1,0 +1,43 @@
+project:
+  type: book
+  render:
+    - "*.qmd"
+    - "!files/*qmd"
+
+book:
+  title: "Data Science for Public Good"
+  author: "Jesse Sadler"
+  date: "5/25/2026"
+  chapters:
+    - index.qmd
+    - part: "R and RStudio"
+      chapters:
+        - rstudio-setup.qmd
+        - rstudio-guide.qmd
+        - importing.qmd
+        - wrangling.qmd
+        - ggplot2.qmd
+        - ggplot2-color.qmd
+    - part: "Git and GitHub"
+      chapters:
+        - git-overview.qmd
+        - git-install.qmd
+        - git-setup.qmd
+        - git-workflow.qmd
+        - git-glossary.qmd
+    - part: "Markdown and Quarto"
+      chapters: 
+        - markdown-syntax.qmd
+        - quarto-docs.qmd
+
+
+
+format:
+  html:
+    theme:
+      - cosmo
+      - custom.scss
+    toc: true
+    code-link: true
+    number-depth: 2
+    highlight-style: arrow

@@ -1,0 +1,21 @@
+# Introduction {.unnumbered}
+
+This website gathers materials for learning the foundations of R, RStudio, Quarto documents, Git, GitHub, and Shiny.
+
+The R examples come from [Data Carpentries - R for Social Scientists](https://datacarpentry.github.io/r-socialsci/). This lesson will be used during the workshops to help orient learners in R and RStudio. 
+
+- The best place to start for more in-depth discussion of working with data in R is Hadley Wickham et al., *R for Data Science: Import, Tidy, Transform, Visualize, and Model Data*, Second edition (O'Reilly, 2023), <https://r4ds.hadley.nz>.
+- The [Tidyverse website](https://tidyverse.org) should be another bookmarked site. If you cannot remember how to do something in the tidyverse, this is a great resource.
+- Two great resources on data visualization with ggplot2 are:
+    - Kieran Healy, *Data Visualization: A Practical Introduction*, Second edition (Princeton University Press), <https://socviz.co>.
+    - Nicola Rennie, *The Art of Data Visualization with ggplot2: The TidyTuesday Cookbook* (CRC Press, 2025), <https://nrennie.rbind.io/art-of-viz/>.
+
+This website highlights the use of Git and GitHub through RStudio.
+
+- Jenny Bryan, [*Happy Git and GitHub for the useR*](http://happygitwithr.com) is an invaluable resource for working with Git and GitHub for R users.
+- A command line centered approach to Git and GitHub is provided by [Software Carpentry - Introduction to Git](https://swcarpentry.github.io/git-novice/).
+- A nice overview of Git commands is provided by [Wizard Zines: Git cheatsheet](https://wizardzines.com/git-cheat-sheet.pdf).
+
+[Quarto documents](https://quarto.org) provide a way to merge code with Markdown text, enabling people to make anything from PDFs to websites. The [Quarto documentation](https://quarto.org/docs/guide/) is the best place to go for any questions.
+
+[Shiny](https://shiny.posit.co) makes it possible to turn R into interactive visualizations. The best resource for getting started is Hadley Wickham, *Mastering Shiny* (O'Reilly, 2021), <https://mastering-shiny.org>. A modern interface for building shiny apps is provided by the [bslib package](https://rstudio.github.io/bslib/index.html).

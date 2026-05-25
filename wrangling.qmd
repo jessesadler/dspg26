@@ -1,0 +1,170 @@
+---
+title: "Wrangling data in the tidyverse"
+format: html
+---
+
+When working with a data frame, you will usually want to modify it in some way. You may want to make some calculations based on different columns in the data or calculate some summary statistics. You may only need a subset of the data, either of the rows or columns. You might want to split the data into separate data frames or join together related data frames. Or you may need to clean up the data, changing column names, modifying values in different ways, or changing the shape of the data frame before doing your analysis and visualization. These are some of the more common tasks of **data wrangling**.[^1]
+
+These tasks can be broken into three main categories:
+
+1. Manipulating rows and columns.
+2. Joining together related data frames.
+3. Modifying the structure of a data frame.
+
+## Pipes
+Before getting into the details of how to go about doing these data wrangling tasks using the tidyverse, we should introduce a tool that will make this process of data cleaning much easier to write and more legible to read, namely the pipe (`|>`).[^2] In doing almost any data wrangling task, you will want to perform multiple manipulations. You may want to remove some columns, *and then* remove rows with missing data, *and then* calculate the frequency of one or more column, *and then* calculate some summary statistics.
+
+The **pipe** is the *and then*. It links together multiple functions together, taking the output from the left of the pipe and moving it to the function on the right. Using the pipe will look something like this, and remember you can think of it as *and then*:
+
+```
+data scientists |>
+  collect data |>
+  explore the data |>
+  read about the context of the data |>
+  analyze the data |>
+  visualize the data |>
+  publish an analysis
+```
+
+In this analogy `data scientists` take the place of the data and the various actions (verbs) are the functions.
+
+## 1. Manipulating rows and columns with dplyr
+The core set of [dplyr](https://dplyr.tidyverse.org) functions are designed to work with the pipe. They take in a data frame as their input in the first argument (named `.data`); subsequent arguments include the (unquoted) column names that are operated on; and the output is a data frame, which can be *piped* into another function. You can think of these functions as verbs to manipulate rows and columns. The core functions are:
+
+| Function      | Description                          |
+|-------------- |--------------------------------------|
+| `select()`    | Subset **columns**.                                                                                |
+| `filter()`    | Subset **rows** by conditions based on data in columns.                                            |
+| `mutate()`    | Create new columns using information from other columns.                                           |
+| `group_by()`  | Group the data by values in column such as *by village* or *by sex*.                               |
+| `summarize()` | Aggregate the data, usually on grouped data, to create summary tables.                             |
+| `arrange()`   | Arrange the order of rows by values in columns. Often used with `desc()` to reverse default order. |
+
+- To read more about the core dplyr functions, see [R for Data Science: Data Transformation](https://r4ds.hadley.nz/data-transform.html).
+- For even more practice, check out the Data Carpentries, R for Social Science episode on [Data Wrangling with dplyr](https://datacarpentry.github.io/r-socialsci/03-dplyr.html).
+
+Let's look at an example using the `SAFI_clean.csv` data from the R for Social Science lesson.
+
+
+```{r}
+#| eval: false
+library(tidyverse)
+# Read the data without further specifications
+interviews <- read_csv("data-raw/SAFI_clean.csv", na = "NULL")
+```
+
+```{r}
+#| label: setup2
+#| echo: false
+#| message: false
+library(tidyverse)
+interviews <- read_csv("files/SAFI_clean.csv", na = "NULL")
+```
+
+```{r}
+interviews |>
+  select(village, no_membrs:liv_count) |> # <1>
+  filter(!is.na(memb_assoc)) |> # <2>
+  mutate(people_per_room = no_membrs / rooms) |> # <3>
+  group_by(village, memb_assoc) |> # <4>
+  summarise(mean_per_room = mean(people_per_room), # <5>
+            n = n(), # <6>
+            .groups = "drop") |> # <7>
+  arrange(desc(mean_per_room)) # <8>
+```
+
+1. Subset columns to work on; not strictly necessary because of summarization further in pipeline.
+2. Remove missing values for whether the household is a member of an irrigation association.
+3. Create new column for average people per room in a household.
+4. Group the data by village and whether the household is a member of an irrigation association.
+5. Find the average people per room for households broken down by village and member association status.
+6. Count the number of observations in each group.
+7. Drop the remaining grouping of village.
+8. Arrange the rows by the average people per room in descending order.
+
+## 2. Joining together related data frames
+A common data wrangling task is to join together related data frames. This situation can come about by the desire split up a dataset into multiple datasets to keep them clean and tidy or the raw data may already be separated into different data frames. **Joins** make it possible to work with multiple datasets at a time.
+
+For instance, in collecting field data, you might have a spreadsheet that notes the dates you conducted the interviews and a separate spreadsheet for the data collected. The two data frames can be reconnected as long as they share a column that identifies each row. In `interviews` this is the `key_ID` column.
+
+```{r}
+# Split the data into to data frames
+interview_dates <- interviews |>
+  select(key_ID, interview_date)
+
+interviews <- interviews |>
+  select(!interview_date)
+
+# Data frame with dates
+interview_dates
+
+# Data frame with the rest of the data
+interviews
+```
+
+There are four main join functions. All take two data frames and join them `by` a column that is shared by both data frames. The names of the column to join by do not need to be the same, but it this case they are, namely `"key_ID"`. The four functions differ in *how* they join the data frames.
+
+| Function       | Description                          |
+|--------------  |--------------------------------------|
+| `left_join()`  | Keep all observations in the first (left) data frame.                                          |
+| `right_join()` | Keep all observations in the second (right) data frame.                                        |
+| `full_join()`  | Keep all observations from *both* data frames.                                                 |
+| `inner_join()` | Only keep observations that are in *both* data frames, dropping rows that do not have a match. |
+
+Generally, it is best to default to `left_join()`. In this case, both data frames have all of the `key_ID`s, so it does not matter which one you use.
+
+```{r}
+left_join(interview_dates, interviews, by = "key_ID")
+```
+
+### Resources
+- A good overview is provided by the [Joins](https://r4ds.hadley.nz/joins.html) chapter of *R for Data Science*.
+- See also the [Two-table verbs article](https://dplyr.tidyverse.org/articles/two-table.html) in the dplyr package.
+
+## 3. Modifying the structure of a data frame
+A third task you may face is needing to alter the structure of your data to make it tidy. This is the specialty of the [tidyr](https://tidyr.tidyverse.org/index.html) package. The principles of tidy data are:
+
+1. Each variable is a column; each column is a variable.
+2. Each observation is a row; each row is an observation.
+3. Each value is a cell; each cell is a single value.
+
+Data is not always tidy; sometimes for good reason. For instance, in collecting data it might be easier to place more than one value in single column such as the `items_owned` and `months_lack_food` columns in `SAFI_clean.csv`. However, this structure for the data makes it difficult to know which items each household owned, how many, and what months they lacked food. tidyr provides tools to change the structure of the data into something more useful.
+
+Given the structure of the data in `SAFI_clean.csv`, if you wanted to know more about the months in which households lacked food, it is necessary to separate out the data either into separate columns or rows. This example makes the data longer by separating the months into rows to look at the months that households lacked food by village.
+
+```{r}
+lack_food <- interviews |> 
+  select(key_ID, village, months_lack_food) |> # <1>
+  separate_longer_delim(months_lack_food, delim = ";") # <2>
+lack_food
+```
+
+1. Subset the data frame to only the necessary columns.
+2. Make a new row for each semi-colon in the `months_lack_food` column.
+
+Now the data is in a format that is easier to analyze. It is possible to see the number of months each household lacked food, the months when food is most scarce, or any differences between villages.
+
+```{r}
+# Months lacking food per household
+lack_food |>
+  count(key_ID, name = "n_months")
+
+# Months with greatest food scarcity
+lack_food |>
+  count(months_lack_food, sort = TRUE)
+
+# Months lacking food in households per village
+lack_food  |> 
+  count(village, months_lack_food, sort = TRUE)
+```
+
+### Resources
+This examples provide a short glimpse of the ways that you can manipulate the structure of data frames with tidyr. For more information on working with the `SAFI_clean.csv` data check out the Data Carpentries, R for Social Science episode on [Data Wrangling with tidyr](https://datacarpentry.github.io/r-socialsci/04-tidyr.html). Additional resources on data tidying include:
+
+- A good overview is provided by the [Data tidying](https://r4ds.hadley.nz/data-tidy.html) chapter of *R for Data Science*.
+- The [tidy data article](https://tidyr.tidyverse.org/articles/tidy-data.html) in the tidyr package. It is a code heavy version of Hadley Wickham's [Tidy data paper](https://vita.had.co.nz/papers/tidy-data.html).
+- The [Pivoting article](https://tidyr.tidyverse.org/articles/pivot.html) in the tidyr package.
+
+[^1]: Hadley Wickham, "Tidy Data," *Journal of Statistical Software* 59, no. 10 (2014), https://doi.org/10.18637/jss.v059.i10.
+
+[^2]: This is the base R pipe that was introduced in R 4.1 in 2021. You may also see the magrittr pipe (`%>%`). Their functionality is essentially the same. The base R pipe is created using the pipe character (Shift + backslash) and the greater than sign. You can quickly type it out with the keyboard shortcut `Cmd/Ctrl + Shift + M`. To setup RStudio to use the base pipe with this keyboard shortcut, see [Setting up RStudio for success](rstudio-setup.qmd#other-tweaks).
