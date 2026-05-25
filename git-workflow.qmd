@@ -151,7 +151,6 @@ Now you can do your work and practice the Git and GitHub workflow. The details w
 2. **Check the output** of the changes.
     - [R scripts](rstudio-setup.qmd#scripts-and-reproducibility): check that the code is doing what you want. To be extra sure, restart your R session to make sure the code is not dependent on an object you created without writing it in the script.
     - [Quarto documents](quarto-docs.qmd): check that the quarto document Renders and looks like what you want.[^2]
-    - [Quarto websites](quarto-websites.qmd#render-and-preview-your-website): check that the website builds correctly by rendering and previewing the site from the Build tab in the Environment panel.
 3. Make a **commit** consisting of a defined set of changes. This is a two-step process.
     1. Add the files to the **stage** that you want to be part of a commit.
     2. Commit the staged files with a message describing the changes.

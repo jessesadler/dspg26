@@ -221,7 +221,7 @@ plot_qualitative +
 ## Accessibility and color
 You will notice that some of the above plots are easier to interpret and some of more difficult based on the color palettes. 
 
-Making accessible plots is a multi-faceted task. It involves design, understanding the argument made by the visualization, and adding metadata such as alternative text as shown in [Digital accessibility](accessibility.qmd). This resource will focus on the issue of color choice to make plots more legible to more people. The interpretation of visualizations should not rely solely on color, but good color choices can increase accessibility. For a fuller discussion of accessible design, see Nicola Rennie, [How to create a more accessible line chart](https://nrennie.rbind.io/blog/accessible-line-chart/).
+Making accessible plots is a multi-faceted task. It involves design, understanding the argument made by the visualization, and adding metadata such as alternative text. This resource will focus on the issue of color choice to make plots more legible to more people. The interpretation of visualizations should not rely solely on color, but good color choices can increase accessibility. For a fuller discussion of accessible design, see Nicola Rennie, [How to create a more accessible line chart](https://nrennie.rbind.io/blog/accessible-line-chart/).
 
 There are a couple of packages that provide tools to approximate colorblindness and that provide colorblind friendly palettes. These include:
 
