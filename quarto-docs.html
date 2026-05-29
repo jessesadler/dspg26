@@ -325,11 +325,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ol type="1">
 <li>A <a href="https://en.wikipedia.org/wiki/YAML">YAML header</a> contained within lines with three dashes (<code>---</code>).</li>
 <li>Markdown text.</li>
-<li>Code chunks set off by three back ticks (```).</li>
+<li>Code chunks set off by three back ticks and the coding language in curly brackets (<code>```{r}</code>).</li>
 </ol>
 <div id="fig-quarto-doc" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A screen shot of a Quarto document in RStudio showing the three main components of a YAML header, markdown content, and code chunks.">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-quarto-doc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="files/img/quarto-doc.png" class="img-fluid figure-img" style="width:60.0%" alt="A screen shot of a Quarto document in RStudio showing the three main components of a YAML header, markdown content, and code chunks.">
+<img src="files/img/quarto-doc.png" class="img-fluid figure-img" style="width:90.0%" alt="A screen shot of a Quarto document in RStudio showing the three main components of a YAML header, markdown content, and code chunks.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-quarto-doc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;13.1: A Quarto document in RStudio.
@@ -374,7 +374,7 @@ execute:
 </section><section id="markdown" class="level3"><h3 class="anchored" data-anchor-id="markdown">2. Markdown</h3>
 <p>Unlike R scripts where default text is code, the default text in Quarto documents is Markdown. Use <a href="./markdown-syntax.html">Resources: Markdown syntax</a> for Markdown foundations, and look at the <a href="https://quarto.org/docs/authoring/markdown-basics.html">Quarto Markdown documentation</a> for more details on the style of Markdown you can use in Quarto documents.</p>
 </section><section id="code-chunks" class="level3"><h3 class="anchored" data-anchor-id="code-chunks">3. Code chunks</h3>
-<p>With Markdown as the default editing environment, your code must be placed in code chunks set off by three back ticks (```). They look like this:</p>
+<p>With Markdown as the default editing environment, your code must be placed in code chunks set off by three back ticks followed by the coding language in curly brackets (<code>```{r}</code>). They look like this:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="dv">24</span> <span class="sc">+</span> <span class="dv">87</span></span>
@@ -386,7 +386,7 @@ execute:
 <p>You can create code chunks in RStudio with:</p>
 <ol type="1">
 <li>The keyboard shortcut: <code>Cmd + Option + I</code> or <code>Ctrl + Alt + I</code>.</li>
-<li>Typing the chunk delimiters <code>```{r}</code> and <code>```</code>.</li>
+<li>Typing the chunk delimiters: <code>```{r}</code> to start the chunk and <code>```</code> to end the chunk.</li>
 </ol>
 <p>Once inside a code chunk, text functions as it does in an R script. Comments are made with <code>#</code>. Everything else is code. You can run the expressions in a chunk with <code>Cmd + Return</code> or <code>Ctrl + Enter</code>. Or you can run the entire chunk with the <strong>play</strong> button at the top right of the chunk. The output of the chunks will either be placed directly below the chunk or sent to the console. You can alter this in Global Options -&gt; R Markdown tab -&gt; Show output inline for all R Markdown documents checkbox. See also Other tweaks section in <a href="./rstudio-setup.html#other-tweaks">Setting up RStudio for success</a>.</p>
 <p>The primary difference between code chunks and R scripts is that code chunks can have special comments created with <code>#|</code> that provide options for the output of the chunk. These are formatted as YAML and override any defaults set in the YAML header. You can see the full list of options in the <a href="https://quarto.org/docs/reference/cells/cells-knitr.html">Quarto documentation</a>.</p>
