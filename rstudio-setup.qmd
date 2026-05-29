@@ -13,7 +13,7 @@ It is important to clearly distinguish between [R](https://www.r-project.org) an
 
 It is possible to run R in many different applications and environments. In fact, Posit, the company behind RStudio is currently building a new IDE for data analysis called [Positron](https://positron.posit.co). You can also run R on the command line or in another IDE such as [Visual Studio Code](https://code.visualstudio.com/docs/languages/r).
 
-![An R session running in the Terminal app.](files/img/r-in-terminal.png){#fig-terminal width=60% fig-alt="A screen shot of R running in the Terminal application."}
+![An R session running in the Terminal app.](files/img/r-in-terminal.png){#fig-terminal width=80% fig-alt="A screen shot of R running in the Terminal application."}
 
 RStudio is currently the most widely used way to use R. It is a mature, open source application that provides many features that help people write good R code.
 
@@ -130,7 +130,7 @@ The script trumps the environment panel; it is the source of truth. The code tha
 ## Setting up RStudio for reproducibility
 We need to make some important changes to the default settings in RStudio to ensure that R scripts remain the source of truth of your analysis not your environment. Go to Tools -> Global Options and uncheck Restore .RData into workspace at startup and set Save workspace to .RData on exit to `Never`.
 
-![RStudio Global Options: Set these options for the Workspace.](files/img/rstudio-workspace.png){#fig-workspace width=50% fig-alt="A screen shot of the Settings window for RStudio."}
+![RStudio Global Options: Set these options for the Workspace.](files/img/rstudio-workspace.png){#fig-workspace width=75% fig-alt="A screen shot of the Settings window for RStudio."}
 
 To see what this does, create some objects in your environment using the assignment operator: `x <- 5`. Then, restart your session. You can do this by going to the Session menu -> Restart R. Your environment panel should be empty now. This might seem like it is painful, but it is short-term pain for long-term gain. It will teach you to keep what you want to save in your R script, so that you can always recreate objects or rerun analysis later.
 
