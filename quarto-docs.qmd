@@ -27,9 +27,9 @@ A Quarto document is a plain text file that has a `.qmd` extension. It contains 
 
 1. A [YAML header](https://en.wikipedia.org/wiki/YAML) contained within lines with three dashes (`---`).
 2. Markdown text.
-3. Code chunks set off by three back ticks (```).
+3. Code chunks set off by three back ticks and the coding language in curly brackets (```` ```{r} ````).
 
-![A Quarto document in RStudio.](files/img/quarto-doc.png){#fig-quarto-doc width=60% fig-alt="A screen shot of a Quarto document in RStudio showing the three main components of a YAML header, markdown content, and code chunks."}
+![A Quarto document in RStudio.](files/img/quarto-doc.png){#fig-quarto-doc width=90% fig-alt="A screen shot of a Quarto document in RStudio showing the three main components of a YAML header, markdown content, and code chunks."}
 
 The key distinguishing feature between Quarto documents and R scripts is that you can **render** Quarto documents to different outputs. Rendering a Quarto document with the Render button or `Cmd/Ctrl + Shift + K` runs the R (or Python) code, producing outputs and converting the document to a Markdown document. It then uses [Pandoc](https://pandoc.org/) to convert the Markdown document to whatever output is specified in the YAML heading. The process is shown in @fig-quarto-flow.
 
@@ -68,7 +68,7 @@ The available keys can be found in the documentation for each type of output.[^2
 Unlike R scripts where default text is code, the default text in Quarto documents is Markdown. Use [Resources: Markdown syntax](markdown-syntax.qmd) for Markdown foundations, and look at the [Quarto Markdown documentation](https://quarto.org/docs/authoring/markdown-basics.html) for more details on the style of Markdown you can use in Quarto documents.
 
 ### 3. Code chunks
-With Markdown as the default editing environment, your code must be placed in code chunks set off by three back ticks (```). They look like this:
+With Markdown as the default editing environment, your code must be placed in code chunks set off by three back ticks followed by the coding language in curly brackets (```` ```{r} ````). They look like this:
 
 ```{r}
 #| echo: fenced
@@ -78,7 +78,7 @@ With Markdown as the default editing environment, your code must be placed in co
 You can create code chunks in RStudio with:
 
 1. The keyboard shortcut: `Cmd + Option + I` or `Ctrl + Alt + I`.
-2. Typing the chunk delimiters ```` ```{r} ```` and ```` ``` ````.
+2. Typing the chunk delimiters: ```` ```{r} ```` to start the chunk and ```` ``` ```` to end the chunk.
 
 Once inside a code chunk, text functions as it does in an R script. Comments are made with `#`. Everything else is code. You can run the expressions in a chunk with `Cmd + Return` or `Ctrl + Enter`. Or you can run the entire chunk with the **play** button at the top right of the chunk. The output of the chunks will either be placed directly below the chunk or sent to the console. You can alter this in Global Options -> R Markdown tab -> Show output inline for all R Markdown documents checkbox. See also Other tweaks section in [Setting up RStudio for success](rstudio-setup.qmd#other-tweaks).
 
